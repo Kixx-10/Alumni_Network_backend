@@ -21,7 +21,7 @@ namespace Alumni.Models.Core
         public UserRole Role { get; set; }
 
         [Required]
-        public DateTime CreaatedDate = DateTime.UtcNow.Date;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow.Date;
 
         public DateTime? UpdatedDate { get; set; }
 

@@ -1,9 +1,10 @@
 ﻿using Alumni.DTOS;
+using Alumni.DTOS.Common;
 
 namespace Alumni.Services.SignUpService
 {
     public interface ISignUpService
     {
-        Task<AuthResponseDTO?> SignUpAsync(UserDTO userDto);
+        Task<ServiceResponse<AuthResponseDTO>> SignUpAsync(UserDTO userDto);
     }
 }

@@ -10,10 +10,10 @@
     }
   ],
   "paths": {
-    "/api/User/signup": {
+    "/api/Registration/signup": {
       "post": {
         "tags": [
-          "User"
+          "Registration"
         ],
         "requestBody": {
           "content": {
@@ -42,10 +42,10 @@
         }
       }
     },
-    "/api/User/signin": {
+    "/api/Registration/signin": {
       "post": {
         "tags": [
-          "User"
+          "Registration"
         ],
         "requestBody": {
           "content": {
@@ -112,7 +112,7 @@
   },
   "tags": [
     {
-      "name": "User"
+      "name": "Registration"
     }
   ]
 }

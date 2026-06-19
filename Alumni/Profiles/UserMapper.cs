@@ -1,12 +1,12 @@
 ﻿using Alumni.DTOS;
 using Alumni.Models.Core;
-using AutoMapper;
 
 namespace Alumni.Profiles
 {
-    public class UserMapper:Profile
+    public class UserMapper : AutoMapper.Profile
     {
-        public UserMapper() {
+        public UserMapper()
+        {
             CreateMap<User, UserDTO>().ReverseMap();
         }
     }
