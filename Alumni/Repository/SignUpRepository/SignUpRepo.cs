@@ -1,0 +1,27 @@
+﻿using Alumni.Data;
+using Alumni.Models.Core;
+using Microsoft.EntityFrameworkCore;
+
+namespace Alumni.Repository.SignUpRepository
+{
+    public class SignUpRepo : ISignUpRepo
+    {
+        private readonly AppDbContext _context;
+
+        public SignUpRepo(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<bool> IsEmailExistedAsync(string email)
+        {
+            return await _context.User.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<int> AddUserAsync(User user)
+        {
+            _context.User.Add(user);
+            return await _context.SaveChangesAsync(); // အောင်မြင်ရင် 0 ထက်ကြီးတဲ့ဂဏန်း (Row count) ပြန်ပေးပါလိမ့်မယ်
+        }
+    }
+}
