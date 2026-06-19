@@ -1,4 +1,5 @@
 ﻿using Alumni.DTOS;
+using Alumni.DTOS.Common;
 using Alumni.Repository.SignInRepository;
 using Alumni.Services.TokenService;
 using AutoMapper;
@@ -18,28 +19,29 @@ namespace Alumni.Services.SignInService
             _mapper = mapper;
         }
 
-        public async Task<AuthResponseDTO?> SignInAsync(LoginDTO userDto)
+        public async Task<ServiceResponse<AuthResponseDTO>> SignInAsync(LoginDTO userDto)
         {
 
             var dbUser = await _signRepo.GetUserByEmailAsync(userDto.Email);
 
             if (dbUser == null)
             {
-                return null;
+                return ServiceResponse<AuthResponseDTO>.Failure("USER_NOT_FOUND", "Email Not Found");
             }
 
 
             bool isPasswordValid = BCrypt.Net.BCrypt.Verify(userDto.Password, dbUser.Password);
             if (!isPasswordValid)
             {
-                return null;
+                return ServiceResponse<AuthResponseDTO>.Failure("INVALID_PASSWORD", "Invalid Password");
             }
-
-            return new AuthResponseDTO
+            var authResponse = new AuthResponseDTO
             {
                 User = _mapper.Map<UserDTO>(dbUser),
                 Token = _tokenService.CreateToken(dbUser)
             };
+            return ServiceResponse<AuthResponseDTO>.Success(authResponse, "Login successfully!");
         }
+
     }
 }

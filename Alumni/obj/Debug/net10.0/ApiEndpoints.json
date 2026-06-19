@@ -1,8 +1,8 @@
 [
   {
-    "ContainingType": "Alumni.Controllers.UserController",
+    "ContainingType": "Alumni.Controllers.RegistrationController",
     "Method": "SignIn",
-    "RelativePath": "api/User/signin",
+    "RelativePath": "api/Registration/signin",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -16,9 +16,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Alumni.Controllers.UserController",
+    "ContainingType": "Alumni.Controllers.RegistrationController",
     "Method": "SignUp",
-    "RelativePath": "api/User/signup",
+    "RelativePath": "api/Registration/signup",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,

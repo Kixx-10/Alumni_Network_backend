@@ -21,7 +21,7 @@ namespace Alumni.Repository.SignUpRepository
         public async Task<int> AddUserAsync(User user)
         {
             _context.User.Add(user);
-            return await _context.SaveChangesAsync(); // အောင်မြင်ရင် 0 ထက်ကြီးတဲ့ဂဏန်း (Row count) ပြန်ပေးပါလိမ့်မယ်
+            return await _context.SaveChangesAsync();
         }
     }
 }
