@@ -1,7 +1,10 @@
 using Alumni.Data;
 using Alumni.Profiles;
+using Alumni.Repository.PostRepository;
 using Alumni.Repository.SignInRepository;
 using Alumni.Repository.SignUpRepository;
+using Alumni.Services.PostService;
+using Alumni.Services.PostServices;
 using Alumni.Services.SignInService;
 using Alumni.Services.SignUpService;
 using Alumni.Services.TokenService;
@@ -25,10 +28,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddScoped<ISignUpService, SignUpService>();
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPostService, PostService>();
 //DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
 builder.Services.AddScoped<ISignUpRepo, SignUpRepo>();
-
+builder.Services.AddScoped<IPostRepo, PostRepo>();
 //DI Cors
 builder.Services.AddCors(options =>
 {
@@ -75,6 +79,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
 //AutoMapper Injection
 builder.Services.AddAutoMapper(typeof(UserMapper));
+builder.Services.AddAutoMapper(typeof(PostMapper));
 
 var app = builder.Build();
 
@@ -86,7 +91,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("AllowAll");
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

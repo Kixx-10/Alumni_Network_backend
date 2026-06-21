@@ -1,5 +1,47 @@
 [
   {
+    "ContainingType": "Alumni.Controllers.FileUploadController",
+    "Method": "UploadMultipleImages",
+    "RelativePath": "api/FileUpload/upload-multiple",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "files",
+        "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=10.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.PostController",
+    "Method": "CreatePost",
+    "RelativePath": "api/Post/CreatePost",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createPostDto",
+        "Type": "Alumni.DTOS.CreatePostDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.PostController",
+    "Method": "GetAllPosts",
+    "RelativePath": "api/Post/FetchAllPosts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alumni.Controllers.RegistrationController",
     "Method": "SignIn",
     "RelativePath": "api/Registration/signin",
