@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Alumni.Models.Feeds;
+using System.ComponentModel.DataAnnotations;
 
 namespace Alumni.Models.Core
 {
@@ -24,6 +25,11 @@ namespace Alumni.Models.Core
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.Date;
 
         public DateTime? UpdatedDate { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+        public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public virtual ICollection<Share> Shares { get; set; } = new List<Share>();
 
     }
 }
