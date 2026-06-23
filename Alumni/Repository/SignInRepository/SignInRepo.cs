@@ -15,7 +15,7 @@ namespace Alumni.Repository.SignInRepository
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            return await _context.User.SingleOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
         }
     }
 }

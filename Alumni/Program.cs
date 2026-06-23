@@ -1,8 +1,10 @@
 using Alumni.Data;
 using Alumni.Profiles;
+using Alumni.Repository.ActionRepository;
 using Alumni.Repository.PostRepository;
 using Alumni.Repository.SignInRepository;
 using Alumni.Repository.SignUpRepository;
+using Alumni.Services.ActionService;
 using Alumni.Services.PostService;
 using Alumni.Services.PostServices;
 using Alumni.Services.SignInService;
@@ -29,10 +31,13 @@ builder.Services.AddScoped<ISignUpService, SignUpService>();
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 //DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
 builder.Services.AddScoped<ISignUpRepo, SignUpRepo>();
 builder.Services.AddScoped<IPostRepo, PostRepo>();
+builder.Services.AddScoped<ILikeRepo, LikeRepo>();
+
 //DI Cors
 builder.Services.AddCors(options =>
 {

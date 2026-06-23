@@ -13,13 +13,13 @@ namespace Alumni.Repository.PostRepository
         }
         public async Task<Post> CreatePostRepository(Post post)
         {
-            await _context.Post.AddAsync(post);
+            await _context.Posts.AddAsync(post);
             await _context.SaveChangesAsync();
             return post;
         }
         public async Task<IEnumerable<Post>> GetAllPostRepository()
         {
-            return await _context.Post
+            return await _context.Posts
                  .Include(p => p.Author)
                  .OrderByDescending(p => p.CreatedDate) // latest post order date
                  .ToListAsync();

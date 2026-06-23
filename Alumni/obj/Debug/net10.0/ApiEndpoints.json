@@ -16,6 +16,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alumni.Controllers.LikeController",
+    "Method": "ToggleLike",
+    "RelativePath": "api/Like/toggle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "likeDto",
+        "Type": "Alumni.DTOS.LikeDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alumni.Controllers.PostController",
     "Method": "CreatePost",
     "RelativePath": "api/Post/CreatePost",

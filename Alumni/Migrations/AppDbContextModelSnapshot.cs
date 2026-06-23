@@ -52,7 +52,7 @@ namespace Alumni.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Alumni.Models.Feeds.Comment", b =>
@@ -149,7 +149,7 @@ namespace Alumni.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Alumni.Models.Feeds.Share", b =>
