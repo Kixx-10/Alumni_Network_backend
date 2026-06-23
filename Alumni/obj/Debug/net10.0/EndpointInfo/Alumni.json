@@ -40,6 +40,38 @@
         }
       }
     },
+    "/api/Like/toggle": {
+      "post": {
+        "tags": [
+          "Like"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LikeDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LikeDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LikeDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Post/CreatePost": {
       "post": {
         "tags": [
@@ -172,6 +204,19 @@
         "type": "string",
         "format": "binary"
       },
+      "LikeDTO": {
+        "type": "object",
+        "properties": {
+          "postId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
       "LoginDTO": {
         "type": "object",
         "properties": {
@@ -208,6 +253,9 @@
   "tags": [
     {
       "name": "FileUpload"
+    },
+    {
+      "name": "Like"
     },
     {
       "name": "Post"

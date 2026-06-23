@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Alumni.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260622104812_CreateEntityLikeCommentShareAndRelationship")]
-    partial class CreateEntityLikeCommentShareAndRelationship
+    [Migration("20260623173944_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace Alumni.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Alumni.Models.Feeds.Comment", b =>
@@ -152,7 +152,7 @@ namespace Alumni.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("Alumni.Models.Feeds.Share", b =>

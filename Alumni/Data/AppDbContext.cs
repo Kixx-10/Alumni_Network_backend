@@ -10,7 +10,16 @@ namespace Alumni.Data
         {
 
         }
-        public DbSet<User> User { get; set; }
-        public DbSet<Post> Post { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Like> Shares { get; set; }
+        public DbSet<Like> Comments { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            //  Fluent API Relationship 
+        }
     }
 }

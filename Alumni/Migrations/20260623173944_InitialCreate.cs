@@ -6,11 +6,53 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Alumni.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateEntityLikeCommentShareAndRelationship : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Posts",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: true),
+                    MediaUrls = table.Column<string>(type: "text", nullable: true),
+                    LikeCount = table.Column<int>(type: "integer", nullable: false),
+                    CommentCount = table.Column<int>(type: "integer", nullable: false),
+                    ShareCount = table.Column<int>(type: "integer", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Posts", x => x.PostId);
+                    table.ForeignKey(
+                        name: "FK_Posts_Users_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
@@ -32,15 +74,15 @@ namespace Alumni.Migrations
                         principalTable: "Comment",
                         principalColumn: "CommentId");
                     table.ForeignKey(
-                        name: "FK_Comment_Post_PostId",
+                        name: "FK_Comment_Posts_PostId",
                         column: x => x.PostId,
-                        principalTable: "Post",
+                        principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Comment_User_UserId",
+                        name: "FK_Comment_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -58,15 +100,15 @@ namespace Alumni.Migrations
                 {
                     table.PrimaryKey("PK_Like", x => x.LikeId);
                     table.ForeignKey(
-                        name: "FK_Like_Post_PostId",
+                        name: "FK_Like_Posts_PostId",
                         column: x => x.PostId,
-                        principalTable: "Post",
+                        principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Like_User_UserId",
+                        name: "FK_Like_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -85,15 +127,15 @@ namespace Alumni.Migrations
                 {
                     table.PrimaryKey("PK_Share", x => x.ShareId);
                     table.ForeignKey(
-                        name: "FK_Share_Post_PostId",
+                        name: "FK_Share_Posts_PostId",
                         column: x => x.PostId,
-                        principalTable: "Post",
+                        principalTable: "Posts",
                         principalColumn: "PostId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Share_User_UserId",
+                        name: "FK_Share_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -124,6 +166,11 @@ namespace Alumni.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Posts_AuthorId",
+                table: "Posts",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Share_PostId",
                 table: "Share",
                 column: "PostId");
@@ -145,6 +192,12 @@ namespace Alumni.Migrations
 
             migrationBuilder.DropTable(
                 name: "Share");
+
+            migrationBuilder.DropTable(
+                name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
