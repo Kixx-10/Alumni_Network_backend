@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Alumni.Controllers.CommentsController",
+    "Method": "CreateComment",
+    "RelativePath": "api/comments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Alumni.Models.DTOs.WriteCommentDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alumni.Controllers.FileUploadController",
     "Method": "UploadMultipleImages",
     "RelativePath": "api/FileUpload/upload-multiple",
@@ -51,6 +67,64 @@
     "ContainingType": "Alumni.Controllers.PostController",
     "Method": "GetAllPosts",
     "RelativePath": "api/Post/FetchAllPosts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.CommentsController",
+    "Method": "GetPostComments",
+    "RelativePath": "api/posts/{postId}/comments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "postId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.ProfileController",
+    "Method": "GetProfileById",
+    "RelativePath": "api/Profile/{profileId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "profileId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.ProfileController",
+    "Method": "CreateProfile",
+    "RelativePath": "api/Profile/createProfile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Alumni.Models.DTOs.CreateProfileDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.ProfileController",
+    "Method": "GetMyProfile",
+    "RelativePath": "api/Profile/me",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
