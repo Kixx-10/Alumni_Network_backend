@@ -13,5 +13,6 @@
         // To show name of author
         public Guid AuthorId { get; set; }
         public string AuthorName { get; set; } = string.Empty;
+        public string AuthorAvatarUrl { get; set; } = string.Empty;
     }
 }

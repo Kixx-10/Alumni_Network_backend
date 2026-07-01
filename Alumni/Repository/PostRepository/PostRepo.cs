@@ -21,7 +21,11 @@ namespace Alumni.Repository.PostRepository
         {
             return await _context.Posts
                  .Include(p => p.Author)
-                 .OrderByDescending(p => p.CreatedDate) // latest post order date
+                     .ThenInclude(a => a!.Profile)
+                 .Include(p => p.Comments)
+                 .Include(p => p.Likes)
+                 .Include(p => p.Shares)
+                 .OrderByDescending(p => p.CreatedDate)
                  .ToListAsync();
         }
     }

@@ -1,11 +1,13 @@
 ﻿using Alumni.DTOS;
 using Alumni.Services.ActionService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Alumni.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LikeController : ControllerBase
     {
         private readonly ILikeService _likeService;

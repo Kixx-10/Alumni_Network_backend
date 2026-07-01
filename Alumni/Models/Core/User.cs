@@ -30,6 +30,7 @@ namespace Alumni.Models.Core
         public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Share> Shares { get; set; } = new List<Share>();
+        public virtual Profile? Profile { get; set; }
 
     }
 }

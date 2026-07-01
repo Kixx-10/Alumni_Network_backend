@@ -8,7 +8,6 @@ D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Alumni.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Alumni.pdb
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\AutoMapper.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Humanizer.dll
-D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Microsoft.AspNetCore.OpenApi.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Microsoft.Build.Framework.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Microsoft.CodeAnalysis.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -138,3 +137,6 @@ D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt
 D:\DotNetTestApp\Alumni\Alumni\obj\Debug\net10.0\Alumni.sourcelink.json
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Alumni.staticwebassets.runtime.json
 D:\DotNetTestApp\Alumni\Alumni\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll

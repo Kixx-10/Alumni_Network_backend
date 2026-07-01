@@ -55,6 +55,7 @@ namespace Alumni.Controllers
         }
 
         [HttpGet("FetchAllPosts")]
+        [Authorize]
         public async Task<ActionResult> GetAllPosts()
         {
             var result = await _postService.GetAllPostService();
