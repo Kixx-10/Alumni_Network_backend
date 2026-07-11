@@ -1,12 +1,14 @@
 using Alumni.Data;
-using Alumni.Profiles;
+using Alumni.Hubs;
 using Alumni.Repository.ActionRepository;
+using Alumni.Repository.ChatRepository;
 using Alumni.Repository.CommentRepository;
 using Alumni.Repository.PostRepository;
 using Alumni.Repository.ProfileRepository;
 using Alumni.Repository.SignInRepository;
 using Alumni.Repository.SignUpRepository;
 using Alumni.Services.ActionService;
+using Alumni.Services.ChatService;
 using Alumni.Services.CommentService;
 using Alumni.Services.PostService;
 using Alumni.Services.PostServices;
@@ -18,6 +20,7 @@ using Alumni.Validations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -28,6 +31,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+builder.Services.AddSignalR();
+
 // DI Service Layers
 builder.Services.AddScoped<ISignUpService, SignUpService>();
 builder.Services.AddScoped<ISignInService, SignInService>();
@@ -36,6 +41,8 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IConversationService, ConversationService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 // DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
@@ -44,15 +51,19 @@ builder.Services.AddScoped<IPostRepo, PostRepo>();
 builder.Services.AddScoped<ILikeRepo, LikeRepo>();
 builder.Services.AddScoped<IProfileRepo, ProfileRepo>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 
 // DI Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://192.168.1.6")
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();// for signalR
     });
 });
 
@@ -90,9 +101,7 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
 
 // AutoMapper
-builder.Services.AddAutoMapper(typeof(UserMapper));
-builder.Services.AddAutoMapper(typeof(PostMapper));
-builder.Services.AddAutoMapper(typeof(ProfileMapper));
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -142,5 +151,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseStaticFiles();
 app.MapControllers();
-
+app.MapHub<ChatHub>("/chathub");
 app.Run();

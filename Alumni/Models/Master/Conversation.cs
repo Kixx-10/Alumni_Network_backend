@@ -1,5 +1,6 @@
 ﻿using Alumni.Models.Core;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Alumni.Models.Master
 {
@@ -8,17 +9,23 @@ namespace Alumni.Models.Master
         [Key]
         public Guid ConversationId { get; set; } = Guid.NewGuid();
 
-        // Participants
+        // Participant 1 
         [Required]
         public Guid User1Id { get; set; }
-        public virtual User User1 { get; set; }
 
+        [ForeignKey("User1Id")]
+        public virtual User User1 { get; set; } = null!;
+
+        // Participant 2 
         [Required]
         public Guid User2Id { get; set; }
-        public virtual User User2 { get; set; }
 
-        // Last message reference (One-to-One)
+        [ForeignKey("User2Id")]
+        public virtual User User2 { get; set; } = null!;
+
         public Guid? LastMessageId { get; set; }
+
+        [ForeignKey("LastMessageId")]
         public virtual Message? LastMessage { get; set; }
 
         [Required]
@@ -26,7 +33,8 @@ namespace Alumni.Models.Master
 
         public DateTime? UpdatedDate { get; set; }
 
-        // Navigation property (One-to-Many)
-        public virtual ICollection<Message> Messages { get; set; } = new List<Message>();
+        // Messages collection 
+        public virtual ICollection<Message> Messages { get; set; }
+            = new List<Message>();
     }
 }

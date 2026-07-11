@@ -16,6 +16,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alumni.Controllers.ConversationController",
+    "Method": "GetOrCreateRoom",
+    "RelativePath": "api/Conversation/get-or-create/{receiverId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "receiverId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.ConversationController",
+    "Method": "GetMyConversations",
+    "RelativePath": "api/Conversation/my-inbox",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alumni.Controllers.FileUploadController",
     "Method": "UploadMultipleImages",
     "RelativePath": "api/FileUpload/upload-multiple",
@@ -42,6 +68,59 @@
       {
         "Name": "likeDto",
         "Type": "Alumni.DTOS.LikeDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.MessageController",
+    "Method": "GetChatHistory",
+    "RelativePath": "api/Message/history/{conversationId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "conversationId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "limit",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.MessageController",
+    "Method": "MarkAsRead",
+    "RelativePath": "api/Message/read/{messageId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "messageId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.MessageController",
+    "Method": "SendTestMessage",
+    "RelativePath": "api/Message/send-test",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "Alumni.DTOs.MessageCreateDTO",
         "IsRequired": true
       }
     ],
