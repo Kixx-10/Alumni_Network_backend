@@ -19,6 +19,7 @@ namespace Alumni.Data
         public DbSet<Share> Shares { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<FriendRequest> FriendRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,19 @@ namespace Alumni.Data
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(fr => fr.Sender)
+                .WithMany(u => u.SentFriendRequests)
+                .HasForeignKey(fr => fr.SenderId)
+                .OnDelete(DeleteBehavior.Cascade); // IF user is delete ,delete his request
+
+            // FriendRequest 
+            modelBuilder.Entity<FriendRequest>()
+                .HasOne(fr => fr.Receiver)
+                .WithMany(u => u.ReceivedFriendRequests)
+                .HasForeignKey(fr => fr.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Conversation → User1
             // User1Id FK connect ConversationsAsUser1 navigation 
@@ -63,7 +77,7 @@ namespace Alumni.Data
                 .HasIndex(c => new { c.User1Id, c.User2Id })
                 .IsUnique();
 
-            //  MESSAGe
+            //  MESSAGE
 
             // Message → Sender
             // SenderId FK connect SentMessages navigation 
@@ -80,6 +94,7 @@ namespace Alumni.Data
                 .WithMany(u => u.ReceivedMessages)
                 .HasForeignKey(m => m.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

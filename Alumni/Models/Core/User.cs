@@ -33,6 +33,9 @@ namespace Alumni.Models.Core
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Share> Shares { get; set; } = new List<Share>();
         public virtual Profile? Profile { get; set; }
+
+        public virtual ICollection<FriendRequest> SentFriendRequests { get; set; } = new List<FriendRequest>();
+        public virtual ICollection<FriendRequest> ReceivedFriendRequests { get; set; } = new List<FriendRequest>();
         public virtual ICollection<Conversation> ConversationsAsUser1 { get; set; }
             = new List<Conversation>();
 
@@ -44,5 +47,6 @@ namespace Alumni.Models.Core
 
         public virtual ICollection<Message> ReceivedMessages { get; set; }
             = new List<Message>();
+
     }
 }

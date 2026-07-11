@@ -129,6 +129,95 @@
         }
       }
     },
+    "/api/FriendRequestControllere/send_friendRequest": {
+      "post": {
+        "tags": [
+          "FriendRequestControllere"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendRequestCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendRequestCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendRequestCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FriendRequestControllere/accept/{requestId}": {
+      "put": {
+        "tags": [
+          "FriendRequestControllere"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FriendRequestControllere/reject/{requestId}": {
+      "put": {
+        "tags": [
+          "FriendRequestControllere"
+        ],
+        "parameters": [
+          {
+            "name": "requestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FriendRequestControllere/pending": {
+      "get": {
+        "tags": [
+          "FriendRequestControllere"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Like/toggle": {
       "post": {
         "tags": [
@@ -469,6 +558,16 @@
           "jobTitle": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FriendRequestCreateDTO": {
+        "type": "object",
+        "properties": {
+          "receiverId": {
+            "type": "string",
+            "format": "uuid"
           }
         },
         "additionalProperties": false
