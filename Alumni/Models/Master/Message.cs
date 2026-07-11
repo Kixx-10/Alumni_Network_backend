@@ -1,5 +1,6 @@
 ﻿using Alumni.Models.Core;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Alumni.Models.Master
 {
@@ -8,18 +9,28 @@ namespace Alumni.Models.Master
         [Key]
         public Guid MessageId { get; set; } = Guid.NewGuid();
 
+        // Conversation FK 
         [Required]
         public Guid ConversationId { get; set; }
-        public virtual Conversation Conversation { get; set; }
 
+        [ForeignKey("ConversationId")]
+        public virtual Conversation Conversation { get; set; } = null!;
+
+        // Sender FK 
         [Required]
         public Guid SenderId { get; set; }
-        public virtual User Sender { get; set; }
 
+        [ForeignKey("SenderId")]
+        public virtual User Sender { get; set; } = null!;
+
+        // ── Receiver FK 
         [Required]
         public Guid ReceiverId { get; set; }
-        public virtual User Receiver { get; set; }
 
+        [ForeignKey("ReceiverId")]
+        public virtual User Receiver { get; set; } = null!;
+
+        // ── Content 
         [Required]
         public string Content { get; set; } = string.Empty;
 

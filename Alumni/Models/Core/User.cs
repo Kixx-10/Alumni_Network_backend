@@ -1,4 +1,5 @@
 ﻿using Alumni.Models.Feeds;
+using Alumni.Models.Master;
 using System.ComponentModel.DataAnnotations;
 
 namespace Alumni.Models.Core
@@ -10,13 +11,13 @@ namespace Alumni.Models.Core
 
         [Required]
         [StringLength(50)]
-        public String Name { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
 
         [Required]
         [EmailAddress]
-        public String Email { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
 
-        public String Password { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
 
         [Required]
         public UserRole Role { get; set; }
@@ -26,11 +27,22 @@ namespace Alumni.Models.Core
 
         public DateTime? UpdatedDate { get; set; }
 
+        //navigation properties 
         public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
         public virtual ICollection<Like> Likes { get; set; } = new List<Like>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Share> Shares { get; set; } = new List<Share>();
         public virtual Profile? Profile { get; set; }
+        public virtual ICollection<Conversation> ConversationsAsUser1 { get; set; }
+            = new List<Conversation>();
 
+        public virtual ICollection<Conversation> ConversationsAsUser2 { get; set; }
+            = new List<Conversation>();
+
+        public virtual ICollection<Message> SentMessages { get; set; }
+            = new List<Message>();
+
+        public virtual ICollection<Message> ReceivedMessages { get; set; }
+            = new List<Message>();
     }
 }

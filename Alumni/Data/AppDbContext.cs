@@ -10,39 +10,76 @@ namespace Alumni.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Share> Shares { get; set; }
-        public DbSet<Conversation> Converataions { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
         public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            // Profile → User (One-to-One)
             modelBuilder.Entity<Profile>()
                 .HasOne(p => p.User)
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Conversation → LastMessage (One-to-One)
+            //Conversation → User1
+            // User1Id FK connect ConversationsAsUser1 navigation 
             modelBuilder.Entity<Conversation>()
-                .HasOne(c => c.LastMessage)
-                .WithOne()
-                .HasForeignKey<Conversation>(c => c.LastMessageId)
+                .HasOne(c => c.User1)
+                .WithMany(u => u.ConversationsAsUser1)
+                .HasForeignKey(c => c.User1Id)
+                .OnDelete(DeleteBehavior.Restrict);  // if user delete cannot delete
+
+            // Conversation → User2
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.User2)
+                .WithMany(u => u.ConversationsAsUser2)
+                .HasForeignKey(c => c.User2Id)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Conversation → Messages (One-to-Many)
+            // Conversation → LastMessage (One-to-One) 
+            modelBuilder.Entity<Conversation>()
+                .HasOne(c => c.LastMessage)
+                .WithMany()
+                .HasForeignKey(c => c.LastMessageId)
+                .OnDelete(DeleteBehavior.SetNull)    //  
+                .IsRequired(false);
+
+            // Conversation → Messages (One-to-Many)  
             modelBuilder.Entity<Conversation>()
                 .HasMany(c => c.Messages)
                 .WithOne(m => m.Conversation)
                 .HasForeignKey(m => m.ConversationId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Conversation>()
+                .HasIndex(c => new { c.User1Id, c.User2Id })
+                .IsUnique();
+
+            //  MESSAGe
+
+            // Message → Sender
+            // SenderId FK connect SentMessages navigation 
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(u => u.SentMessages)
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //Message → Receiver
+            // ReceiverId FK connect ReceivedMessages navigation 
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Receiver)
+                .WithMany(u => u.ReceivedMessages)
+                .HasForeignKey(m => m.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
