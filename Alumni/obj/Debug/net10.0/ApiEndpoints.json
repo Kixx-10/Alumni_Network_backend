@@ -58,6 +58,64 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "Method": "AcceptFriendRequest",
+    "RelativePath": "api/FriendRequestControllere/accept/{requestId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "Method": "GetPendingRequests",
+    "RelativePath": "api/FriendRequestControllere/pending",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "Method": "RejectFriendRequest",
+    "RelativePath": "api/FriendRequestControllere/reject/{requestId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "requestId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "Method": "SendFriendRequest",
+    "RelativePath": "api/FriendRequestControllere/send_friendRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "Alumni.DTOS.FriendRequestCreateDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Alumni.Controllers.LikeController",
     "Method": "ToggleLike",
     "RelativePath": "api/Like/toggle",

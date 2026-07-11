@@ -1,5 +1,4 @@
-﻿using Alumni.DTOs;
-using Alumni.DTOS.Common;
+﻿using Alumni.DTOS.Common;
 using Alumni.Services.ChatService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,20 +40,20 @@ namespace Alumni.Controllers
             return Ok(response);
         }
         //for swagger test only
-        [HttpPost("send-test")]
-        public async Task<IActionResult> SendTestMessage([FromBody] MessageCreateDTO dto)
-        {
-            var userIdClaim = User.FindFirst("id")?.Value;
-            if (!Guid.TryParse(userIdClaim, out Guid currentUserId))
-            {
-                return Unauthorized();
-            }
+        //[HttpPost("send-test")]
+        //public async Task<IActionResult> SendTestMessage([FromBody] MessageCreateDTO dto)
+        //{
+        //    var userIdClaim = User.FindFirst("id")?.Value;
+        //    if (!Guid.TryParse(userIdClaim, out Guid currentUserId))
+        //    {
+        //        return Unauthorized();
+        //    }
 
 
-            var response = await _messageService.SendMessageAsync(dto, currentUserId);
+        //    var response = await _messageService.SendMessageAsync(dto, currentUserId);
 
-            if (!response.IsSuccess) return BadRequest(response);
-            return Ok(response);
-        }
+        //    if (!response.IsSuccess) return BadRequest(response);
+        //    return Ok(response);
+        //}
     }
 }

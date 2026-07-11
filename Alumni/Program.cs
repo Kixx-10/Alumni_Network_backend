@@ -3,6 +3,7 @@ using Alumni.Hubs;
 using Alumni.Repository.ActionRepository;
 using Alumni.Repository.ChatRepository;
 using Alumni.Repository.CommentRepository;
+using Alumni.Repository.FriendRepository;
 using Alumni.Repository.PostRepository;
 using Alumni.Repository.ProfileRepository;
 using Alumni.Repository.SignInRepository;
@@ -10,6 +11,7 @@ using Alumni.Repository.SignUpRepository;
 using Alumni.Services.ActionService;
 using Alumni.Services.ChatService;
 using Alumni.Services.CommentService;
+using Alumni.Services.FriendService;
 using Alumni.Services.PostService;
 using Alumni.Services.PostServices;
 using Alumni.Services.ProfileService;
@@ -43,6 +45,7 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IFriendRequestService, FriendRequestService>();
 
 // DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
@@ -54,6 +57,7 @@ builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
+builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
 
 // DI Cors
 builder.Services.AddCors(options =>
