@@ -48,11 +48,11 @@ namespace Alumni.Services.ChatService
         {
             try
             {
-                // var conversations = await _conversationRepository.GetUserConversationsAsync(userId);
-                var conversations = new List<Conversation>();
-
-                // ၂။ Mapper ဖြင့် အုပ်စုလိုက် DTO ပြောင်းလဲခြင်း
-                var dtos = _mapper.Map<IEnumerable<ConversationReadDTO>>(conversations);
+                var conversations = await _conversationRepository.GetUserConversationsAsync(userId);
+                var dtos = _mapper.Map<IEnumerable<ConversationReadDTO>>(conversations, opts =>
+                {
+                    opts.Items["CurrentUserId"] = userId;
+                });
 
                 return ServiceResponse<IEnumerable<ConversationReadDTO>>.Success(dtos, "Inbox list retrieved successfully.");
             }

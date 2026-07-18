@@ -1,4 +1,5 @@
-﻿using Alumni.Models.Master;
+﻿using Alumni.Models.Core;
+using Alumni.Models.Master;
 
 namespace Alumni.Repository.FriendRepository
 {
@@ -17,6 +18,8 @@ namespace Alumni.Repository.FriendRepository
 
         // check if a friend request already exists between two users
         Task<FriendRequest?> GetExistingRequestAsync(Guid senderId, Guid receiverId);
+
+        Task<IEnumerable<User>> GetDiscoverableUsersAsync(Guid currentUserId);
 
     }
 }

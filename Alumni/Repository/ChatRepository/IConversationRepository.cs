@@ -8,6 +8,7 @@ namespace Alumni.Repository.ChatRepository
         Task<Conversation> CreateConversationAsync(Conversation conversation);
 
         Task UpdateConversationLastMessageAsync(Guid conversationId, Guid lastMessageId);
+        Task<IEnumerable<Conversation>> GetUserConversationsAsync(Guid userId);
     }
 }
 

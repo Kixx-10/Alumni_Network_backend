@@ -64,7 +64,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://192.168.1.6")
+        policy.WithOrigins("http://192.168.1.9")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();// for signalR

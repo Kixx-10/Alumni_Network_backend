@@ -12,7 +12,8 @@ namespace Alumni.Profiles
 
             CreateMap<FriendRequest, FriendRequestResponseDTO>()
                 .ForMember(dest => dest.SenderName, opt => opt.MapFrom(src => src.Sender.Name))
-                .ForMember(dest => dest.SenderEmail, opt => opt.MapFrom(src => src.Sender.Email));
+                .ForMember(dest => dest.SenderAvatarUrl, opt => opt.MapFrom(src =>
+                    src.Sender.Profile != null ? src.Sender.Profile.AvatarUrl : string.Empty));
         }
     }
 }

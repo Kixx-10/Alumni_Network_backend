@@ -58,9 +58,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "ContainingType": "Alumni.Controllers.FriendRequestController",
     "Method": "AcceptFriendRequest",
-    "RelativePath": "api/FriendRequestControllere/accept/{requestId}",
+    "RelativePath": "api/FriendRequest/accept/{requestId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -74,9 +74,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
-    "Method": "GetPendingRequests",
-    "RelativePath": "api/FriendRequestControllere/pending",
+    "ContainingType": "Alumni.Controllers.FriendRequestController",
+    "Method": "GetDiscoverableUsers",
+    "RelativePath": "api/FriendRequest/discover",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -84,9 +84,19 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "ContainingType": "Alumni.Controllers.FriendRequestController",
+    "Method": "GetPendingRequests",
+    "RelativePath": "api/FriendRequest/pending",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.FriendRequestController",
     "Method": "RejectFriendRequest",
-    "RelativePath": "api/FriendRequestControllere/reject/{requestId}",
+    "RelativePath": "api/FriendRequest/reject/{requestId}",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -100,9 +110,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Alumni.Controllers.FriendRequestControllere",
+    "ContainingType": "Alumni.Controllers.FriendRequestController",
     "Method": "SendFriendRequest",
-    "RelativePath": "api/FriendRequestControllere/send_friendRequest",
+    "RelativePath": "api/FriendRequest/send_friendRequest",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -163,22 +173,6 @@
       {
         "Name": "messageId",
         "Type": "System.Guid",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Alumni.Controllers.MessageController",
-    "Method": "SendTestMessage",
-    "RelativePath": "api/Message/send-test",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "dto",
-        "Type": "Alumni.DTOs.MessageCreateDTO",
         "IsRequired": true
       }
     ],
