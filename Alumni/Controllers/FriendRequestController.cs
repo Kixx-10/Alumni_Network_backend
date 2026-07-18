@@ -8,10 +8,10 @@ namespace Alumni.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class FriendRequestControllere : ControllerBase
+    public class FriendRequestController : ControllerBase
     {
         private readonly IFriendRequestService _friendRequestService;
-        public FriendRequestControllere(IFriendRequestService friendRequestService)
+        public FriendRequestController(IFriendRequestService friendRequestService)
         {
             _friendRequestService = friendRequestService;
         }
@@ -25,6 +25,24 @@ namespace Alumni.Controllers
             }
             return Guid.Parse(userIdString);
         }
+
+        // GET: api/FriendRequest/discover
+        [HttpGet("discover")]
+        public async Task<IActionResult> GetDiscoverableUsers()
+        {
+            try
+            {
+                var userId = GetCurrentUserId();
+                var result = await _friendRequestService.GetDiscoverableUsersAsync(userId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { IsSuccess = false, Message = ex.Message });
+            }
+        }
+
         [HttpPost("send_friendRequest")]
         public async Task<IActionResult> SendFriendRequest([FromBody] FriendRequestCreateDTO createDto)
         {
@@ -45,6 +63,7 @@ namespace Alumni.Controllers
                 return StatusCode(500, new { IsSuccess = false, Message = ex.Message });
             }
         }
+
         [HttpPut("accept/{requestId}")]
         public async Task<IActionResult> AcceptFriendRequest(Guid requestId)
         {

@@ -1,4 +1,5 @@
 ﻿using Alumni.Data;
+using Alumni.Models.Core;
 using Alumni.Models.Master;
 using Microsoft.EntityFrameworkCore;
 
@@ -59,6 +60,7 @@ namespace Alumni.Repository.FriendRepository
         {
             var pendingRequests = await _context.FriendRequests
                 .Include(fr => fr.Sender)
+                .ThenInclude(u => u.Profile)
                 .Where(fr => fr.ReceiverId == userId && fr.Status == "Pending")
                 .ToListAsync();
 
@@ -71,6 +73,23 @@ namespace Alumni.Repository.FriendRepository
                 .Where(fr => fr.Id == requestId)
                 .FirstOrDefaultAsync();
             return request;
+        }
+
+        public async Task<IEnumerable<User>> GetDiscoverableUsersAsync(Guid currentUserId)
+        {
+            // ကိုယ်နဲ့ သက်ဆိုင်ပြီး Accepted (Friend) သို့မဟုတ် Pending ဖြစ်နေတဲ့ Request အားလုံးကို အရင်ယူတယ်
+            var activeRequestUserIds = await _context.FriendRequests
+                .Where(fr => (fr.SenderId == currentUserId || fr.ReceiverId == currentUserId)
+                             && (fr.Status == "Accepted" || fr.Status == "Pending"))
+                .Select(fr => fr.SenderId == currentUserId ? fr.ReceiverId : fr.SenderId)
+                .Distinct()
+                .ToListAsync();
+
+            // Users Table ထဲကနေ မိမိကိုယ်တိုင် မဟုတ်တဲ့သူနှင့် အပေါ်က activeRequestUserIds ထဲမှာ မပါတဲ့သူတွေကိုပဲ စစ်ထုတ်ယူတယ်
+            return await _context.Users
+                .Include(u => u.Profile)
+                .Where(u => u.UserId != currentUserId && !activeRequestUserIds.Contains(u.UserId))
+                .ToListAsync();
         }
     }
 }

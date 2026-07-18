@@ -8,6 +8,8 @@ namespace Alumni.Profiles
         public UserMapper()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserDiscoverDTO>()
+                .ForMember(dest => dest.AvatarUrl, opt => opt.MapFrom(src => src.Profile != null ? src.Profile.AvatarUrl : string.Empty));
         }
     }
 }

@@ -129,10 +129,22 @@
         }
       }
     },
-    "/api/FriendRequestControllere/send_friendRequest": {
+    "/api/FriendRequest/discover": {
+      "get": {
+        "tags": [
+          "FriendRequest"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FriendRequest/send_friendRequest": {
       "post": {
         "tags": [
-          "FriendRequestControllere"
+          "FriendRequest"
         ],
         "requestBody": {
           "content": {
@@ -160,10 +172,10 @@
         }
       }
     },
-    "/api/FriendRequestControllere/accept/{requestId}": {
+    "/api/FriendRequest/accept/{requestId}": {
       "put": {
         "tags": [
-          "FriendRequestControllere"
+          "FriendRequest"
         ],
         "parameters": [
           {
@@ -183,10 +195,10 @@
         }
       }
     },
-    "/api/FriendRequestControllere/reject/{requestId}": {
+    "/api/FriendRequest/reject/{requestId}": {
       "put": {
         "tags": [
-          "FriendRequestControllere"
+          "FriendRequest"
         ],
         "parameters": [
           {
@@ -206,10 +218,10 @@
         }
       }
     },
-    "/api/FriendRequestControllere/pending": {
+    "/api/FriendRequest/pending": {
       "get": {
         "tags": [
-          "FriendRequestControllere"
+          "FriendRequest"
         ],
         "responses": {
           "200": {
@@ -297,37 +309,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Message/send-test": {
-      "post": {
-        "tags": [
-          "Message"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MessageCreateDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MessageCreateDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MessageCreateDTO"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "OK"
@@ -594,32 +575,6 @@
             "nullable": true
           },
           "password": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "MessageCreateDTO": {
-        "type": "object",
-        "properties": {
-          "conversationId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "senderId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "receiverId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "content": {
-            "type": "string",
-            "nullable": true
-          },
-          "attachmentUrl": {
             "type": "string",
             "nullable": true
           }

@@ -28,6 +28,21 @@ namespace Alumni.Repository.ChatRepository
 
             return conversation;
         }
+
+        public async Task<IEnumerable<Conversation>> GetUserConversationsAsync(Guid userId)
+        {
+            return await _context.Conversations
+                .AsNoTracking()
+                .Include(c => c.User1)
+                    .ThenInclude(u => u.Profile)
+                .Include(c => c.User2)
+                    .ThenInclude(u => u.Profile)
+                .Include(c => c.LastMessage)
+                .Where(c => c.User1Id == userId || c.User2Id == userId)
+                .OrderByDescending(c => c.UpdatedDate ?? c.CreatedDate)
+                .ToListAsync();
+        }
+
         public async Task UpdateConversationLastMessageAsync(Guid conversationId, Guid lastMessageId)
         {
             var conversation = await _context.Conversations.FindAsync(conversationId);

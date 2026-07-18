@@ -139,5 +139,22 @@ namespace Alumni.Services.FriendService
 
             return response;
         }
+
+        public async Task<ServiceResponse<IEnumerable<UserDiscoverDTO>>> GetDiscoverableUsersAsync(Guid userId)
+        {
+            var response = new ServiceResponse<IEnumerable<UserDiscoverDTO>>();
+
+            // Repository မှ Entity စာရင်းဆွဲထုတ်ခြင်း
+            var users = await _friendRequestRepository.GetDiscoverableUsersAsync(userId);
+
+            // AutoMapper သုံးပြီး UserDiscoverDTO စာရင်းအဖြစ် ပြောင်းလဲခြင်း
+            var userDtos = _mapper.Map<IEnumerable<UserDiscoverDTO>>(users);
+
+            response.Data = userDtos;
+            response.IsSuccess = true;
+            response.Message = "Discoverable users retrieved successfully.";
+
+            return response;
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace Alumni.Services.FriendService
 
         // take pending friend requests for a user
         Task<ServiceResponse<IEnumerable<FriendRequestResponseDTO>>> GetPendingRequestsAsync(Guid userId);
+        Task<ServiceResponse<IEnumerable<UserDiscoverDTO>>> GetDiscoverableUsersAsync(Guid userId);
     }
 }
