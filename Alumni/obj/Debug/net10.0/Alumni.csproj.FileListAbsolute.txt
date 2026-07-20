@@ -136,7 +136,6 @@ D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
 D:\DotNetTestApp\Alumni\Alumni\obj\Debug\net10.0\Alumni.sourcelink.json
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Alumni.staticwebassets.runtime.json
-D:\DotNetTestApp\Alumni\Alumni\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\DotNetTestApp\Alumni\Alumni\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll

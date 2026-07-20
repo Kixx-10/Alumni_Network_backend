@@ -10,6 +10,9 @@ namespace Alumni.Services.ChatService
 
         //the chat list that user current participate in, including the last message and the other user information
         Task<ServiceResponse<IEnumerable<ConversationReadDTO>>> GetUserConversationListAsync(Guid userId);
+
+        //Extra method
+        Task<List<Guid>> GetConversationPartnerIdsAsync(Guid userId);
     }
 }
 

@@ -293,5 +293,21 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Alumni.Controllers.UserStatusController",
+    "Method": "GetUserStatus",
+    "RelativePath": "api/users/{userId}/status",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   }
 ]

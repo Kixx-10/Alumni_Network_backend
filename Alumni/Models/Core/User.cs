@@ -21,6 +21,8 @@ namespace Alumni.Models.Core
 
         [Required]
         public UserRole Role { get; set; }
+        public bool IsOnline { get; set; } = false;
+        public DateTime? LastSeen { get; set; }
 
         [Required]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow.Date;
