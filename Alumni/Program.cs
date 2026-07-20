@@ -18,6 +18,7 @@ using Alumni.Services.ProfileService;
 using Alumni.Services.SignInService;
 using Alumni.Services.SignUpService;
 using Alumni.Services.TokenService;
+using Alumni.Services.UserService;
 using Alumni.Validations;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -46,6 +47,8 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IFriendRequestService, FriendRequestService>();
+//
+builder.Services.AddScoped<IUserService, UserService>();
 
 // DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
@@ -58,13 +61,15 @@ builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
+//
+builder.Services.AddSingleton<ConnectionMapping<Guid>>();
 
 // DI Cors
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://192.168.1.9")
+        policy.WithOrigins("http://192.168.60.76")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();// for signalR

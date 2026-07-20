@@ -1,8 +1,10 @@
-﻿using Alumni.DTOs;
+﻿using Alumni.Data;
+using Alumni.DTOs;
 using Alumni.DTOS.Common;
 using Alumni.Models.Master;
 using Alumni.Repository.ChatRepository;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Alumni.Services.ChatService
 {
@@ -10,10 +12,12 @@ namespace Alumni.Services.ChatService
     {
         private readonly IConversationRepository _conversationRepository;
         private readonly IMapper _mapper;
-        public ConversationService(IConversationRepository conversationRepository, IMapper mapper)
+        private readonly AppDbContext _context;
+        public ConversationService(IConversationRepository conversationRepository, IMapper mapper, AppDbContext context)
         {
             _conversationRepository = conversationRepository;
             _mapper = mapper;
+            _context = context;
         }
 
         public async Task<ServiceResponse<ConversationReadDTO>> GetOrCreateConversationRoomAsync(Guid user1Id, Guid user2Id)
@@ -60,6 +64,18 @@ namespace Alumni.Services.ChatService
             {
                 return ServiceResponse<IEnumerable<ConversationReadDTO>>.Failure("INBOX_LIST_ERROR", ex.Message);
             }
+        }
+
+        //
+        public async Task<List<Guid>> GetConversationPartnerIdsAsync(Guid userId)
+        {
+            var partnerIds = await _context.Conversations
+                .Where(c => c.User1Id == userId || c.User2Id == userId)
+                .Select(c => c.User1Id == userId ? c.User2Id : c.User1Id)
+                .Distinct()
+                .ToListAsync();
+
+            return partnerIds;
         }
     }
 }

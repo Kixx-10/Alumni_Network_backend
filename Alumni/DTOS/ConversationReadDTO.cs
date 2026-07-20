@@ -7,9 +7,11 @@
         public Guid User2Id { get; set; }
         public string RecipientName { get; set; } = string.Empty;
         public string? RecipientAvatar { get; set; }
-        //public Guid? LastMessageId { get; set; }
-        //public MessageReadDTO? LastMessage { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
     }
 }
+
+//public Guid? LastMessageId { get; set; }
+//public MessageReadDTO? LastMessage { get; set; }
