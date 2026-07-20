@@ -1,5 +1,5 @@
-# Step 1: Build Stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# Step 1: Build Stage using .NET 10.0 SDK
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Project file ကို copy ကူးပြီး restore လုပ်ခြင်း
@@ -11,8 +11,8 @@ COPY . .
 WORKDIR "/src/Alumni"
 RUN dotnet publish "Alumni.csproj" -c Release -o /app/out
 
-# Step 2: Runtime Stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Step 2: Runtime Stage using .NET 10.0 ASP.NET Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/out .
 
