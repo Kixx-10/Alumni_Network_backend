@@ -2,13 +2,12 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Project file ကို သီးသန့် copy ကူးပြီး restore လုပ်ခြင်း
-COPY ["Alumni/Alumni.csproj", "Alumni/"]
-RUN dotnet restore "Alumni/Alumni.csproj"
+# Project file ကို copy ကူးပြီး restore လုပ်ခြင်း
+COPY ["Alumni.csproj", "./"]
+RUN dotnet restore "Alumni.csproj"
 
-# ကျန်တဲ့ file အားလုံးကို copy ကူးပြီး publish လုပ်ခြင်း
+# ကျန်သည့် ဖိုင်အားလုံးကို copy ကူးပြီး publish လုပ်ခြင်း
 COPY . .
-WORKDIR "/src/Alumni"
 RUN dotnet publish "Alumni.csproj" -c Release -o /app/out
 
 # Step 2: Runtime Stage
