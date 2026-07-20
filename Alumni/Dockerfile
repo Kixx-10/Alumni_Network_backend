@@ -22,10 +22,25 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./Alumni.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+# This stage is used in production or when running from VS in regular mode
 FROM base AS final
 WORKDIR /app
+
+# 1. Root User အဖြစ် ခေတ္တ ပြောင်းပါ
+USER root
+
+# 2. Published code များကို အရင် copy ကူးပါ
 COPY --from=publish /app/publish .
+
+# 3. wwwroot/uploads directory ဖန်တီးပြီး App User ($APP_UID) ဆီ Permission နှင့် Ownership အပြည့်ပေးပါ
+RUN mkdir -p /app/wwwroot/uploads \
+    && chmod -R 777 /app/wwwroot \
+    && chown -R $APP_UID:$APP_UID /app/wwwroot
+
+# 4. App User ဆီ ပြန်ပြောင်းပါ
+USER $APP_UID
+
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 ENV ASPNETCORE_URLS=http://+:8080
+
 ENTRYPOINT ["dotnet", "Alumni.dll"]
