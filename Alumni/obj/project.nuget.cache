@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "1Oqb0/cdJEA=",
+  "dgSpecHash": "P7KwqRnRJFE=",
   "success": true,
   "projectFilePath": "D:\\DotNetTestApp\\Alumni\\Alumni\\Alumni.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ATH\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\ATH\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\ATH\\.nuget\\packages\\bcrypt.net-next\\4.2.0\\bcrypt.net-next.4.2.0.nupkg.sha512",
+    "C:\\Users\\ATH\\.nuget\\packages\\cloudinarydotnet\\1.29.2\\cloudinarydotnet.1.29.2.nupkg.sha512",
     "C:\\Users\\ATH\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\ATH\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.1\\fluentvalidation.aspnetcore.11.3.1.nupkg.sha512",
     "C:\\Users\\ATH\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
