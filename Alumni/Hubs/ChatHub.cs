@@ -1,5 +1,4 @@
-﻿
-using Alumni.DTOs;
+﻿using Alumni.DTOs;
 using Alumni.Services.ChatService;
 using Alumni.Services.UserService;
 using Microsoft.AspNetCore.Authorization;
@@ -33,8 +32,7 @@ namespace Alumni.Hubs
             {
                 var connectionCount = _connections.Add(userId, Context.ConnectionId);
 
-                // ပထမဆုံး connection ဖြစ်မှသာ "online" broadcast လုပ် 
-                // (device ၂ ခုနေရာက login ဝင်ထားရင် ၂ ခါ broadcast မလုပ်ဖို့)
+                // ပထမဆုံး Connection ဖြစ်မှသာ Online Status Broadcast 
                 if (connectionCount == 1)
                 {
                     await _userService.SetUserOnlineAsync(userId, true);
@@ -52,7 +50,7 @@ namespace Alumni.Hubs
                     }
                 }
 
-                Console.WriteLine($"User Connected:{userId} | ConnectionId :{Context.ConnectionId} | Total connections: {connectionCount}");
+                Console.WriteLine($"[ONLINE] User: {userId} | ConnectionId: {Context.ConnectionId} | Total: {connectionCount}");
             }
             await base.OnConnectedAsync();
         }
@@ -63,7 +61,6 @@ namespace Alumni.Hubs
             {
                 var remainingConnections = _connections.Remove(userId, Context.ConnectionId);
 
-                // connection အားလုံး ကုန်မှသာ "offline" broadcast လုပ်
                 if (remainingConnections == 0)
                 {
                     var lastSeen = DateTime.UtcNow;
@@ -82,22 +79,32 @@ namespace Alumni.Hubs
                     }
                 }
 
-                Console.WriteLine($"User Disconnected:{userId} | ConnectionId :{Context.ConnectionId} | Remaining: {remainingConnections}");
+                Console.WriteLine($"[OFFLINE] User: {userId} | Remaining Connections: {remainingConnections}");
             }
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(Guid receiverId, string content, Guid conversationId, string? attachmentUrl = null)
+        public async Task SendMessage(string receiverIdStr, string content, string conversationIdStr, string? attachmentUrl = null)
         {
+            //   Sender Authentication Check
             if (!Guid.TryParse(Context.UserIdentifier, out Guid senderId))
             {
                 throw new HubException("User unauthorized.");
             }
+
+            // GUID Parameters Parsing Check
+            if (!Guid.TryParse(receiverIdStr, out Guid receiverId) || !Guid.TryParse(conversationIdStr, out Guid conversationId))
+            {
+                throw new HubException("Invalid Receiver or Conversation Identifier.");
+            }
+
+            //  Content Validation
             if (string.IsNullOrWhiteSpace(content) && string.IsNullOrEmpty(attachmentUrl))
             {
                 throw new HubException("Cannot send an empty message.");
             }
-            if (string.IsNullOrEmpty(attachmentUrl))
+
+            if (string.IsNullOrWhiteSpace(attachmentUrl))
             {
                 attachmentUrl = null;
             }
@@ -111,11 +118,15 @@ namespace Alumni.Hubs
                 AttachmentUrl = attachmentUrl
             };
 
+            //  Database Save Operation
             var response = await _messageService.SendMessageAsync(messageCreateDto, senderId);
 
+            //  Real-time Message Broadcast
             if (response.IsSuccess && response.Data != null)
             {
+                // Receiver ဘက်သို့ Message ပို့ပေးခြင်း
                 await Clients.User(receiverId.ToString()).SendAsync("ReceiveMessage", response.Data);
+                // Sender (Caller) ဘက်သို့ တုံ့ပြန်ချက် ပြန်ပို့ပေးခြင်း
                 await Clients.Caller.SendAsync("ReceiveMessage", response.Data);
             }
             else
