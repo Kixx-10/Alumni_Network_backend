@@ -20,6 +20,7 @@ using Alumni.Services.SignUpService;
 using Alumni.Services.TokenService;
 using Alumni.Services.UserService;
 using Alumni.Validations;
+using CloudinaryDotNet;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,6 +36,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddSignalR();
+var cloudinarySettings = builder.Configuration.GetSection("CloudinarySettings");
+Account account = new Account(
+    cloudinarySettings["CloudName"],
+    cloudinarySettings["ApiKey"],
+    cloudinarySettings["ApiSecret"]
+);
+Cloudinary cloudinary = new Cloudinary(account);
+builder.Services.AddSingleton(cloudinary);
 
 // DI Service Layers
 builder.Services.AddScoped<ISignUpService, SignUpService>();
@@ -69,7 +78,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.SetIsOriginAllowed(_ => true)//policy.WithOrigins("http://192.168.60.76")
+        policy.SetIsOriginAllowed(_ => true)   //policy.WithOrigins("http://192.168.60.76")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();// for signalR
