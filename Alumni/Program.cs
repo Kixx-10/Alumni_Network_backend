@@ -30,12 +30,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
 builder.Services.AddSignalR();
+
+// 💡 1. Cloudinary Setup
 var cloudinarySettings = builder.Configuration.GetSection("CloudinarySettings");
 Account account = new Account(
     cloudinarySettings["CloudName"],
@@ -45,7 +45,7 @@ Account account = new Account(
 Cloudinary cloudinary = new Cloudinary(account);
 builder.Services.AddSingleton(cloudinary);
 
-// DI Service Layers
+//DI Service Layers
 builder.Services.AddScoped<ISignUpService, SignUpService>();
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -56,10 +56,9 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IFriendRequestService, FriendRequestService>();
-//
 builder.Services.AddScoped<IUserService, UserService>();
 
-// DI Repository Layers
+//  DI Repository Layers
 builder.Services.AddScoped<ISignInRepo, SignInRepo>();
 builder.Services.AddScoped<ISignUpRepo, SignUpRepo>();
 builder.Services.AddScoped<IPostRepo, PostRepo>();
@@ -68,24 +67,25 @@ builder.Services.AddScoped<IProfileRepo, ProfileRepo>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IConversationRepository, ConversationRepository>();
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddScoped<IFriendRequestRepository, FriendRequestRepository>();
-//
+
+// SignalR Custom Services (Singleton Registrations)
+builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddSingleton<ConnectionMapping<Guid>>();
 
-// DI Cors
+//  CORS Configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.SetIsOriginAllowed(_ => true)   //policy.WithOrigins("http://192.168.60.76")
+        policy.SetIsOriginAllowed(_ => true)
               .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowCredentials();// for signalR
+              .AllowCredentials(); // SignalR အတွက် 
     });
 });
 
-// JWT Authentication
+//  JWT Authentication with SignalR Query String Support
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -106,21 +106,36 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
     };
+
+    // SignalR Hub အတွက် URL Query String ကနေ Token ဖတ်ယူမည့် Event
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chathub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
-// Database
+// Database Configuration
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
-// Validation
+// Validation & AutoMapper
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<UserValidator>();
-
-// AutoMapper
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+//  Swagger Configuration
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -157,17 +172,20 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// Enable Swagger on Production (Render) for testing & UptimeRobot Pinging
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseCors("AllowAll");
-app.UseHttpsRedirection();
+
+//  Render Server / Keep-Alive  Simple Ping Endpoint
+app.MapGet("/ping", () => Results.Ok("Pong"));
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseStaticFiles();
 app.MapControllers();
 app.MapHub<ChatHub>("/chathub");
+
 app.Run();
