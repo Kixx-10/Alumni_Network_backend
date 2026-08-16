@@ -35,7 +35,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 
-// 💡 1. Cloudinary Setup
+//  1. Cloudinary Setup
 var cloudinarySettings = builder.Configuration.GetSection("CloudinarySettings");
 Account account = new Account(
     cloudinarySettings["CloudName"],
@@ -171,7 +171,7 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
-
+app.UseRouting();
 // Enable Swagger on Production (Render) for testing & UptimeRobot Pinging
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -179,7 +179,7 @@ app.UseSwaggerUI();
 app.UseCors("AllowAll");
 
 //  Render Server / Keep-Alive  Simple Ping Endpoint
-app.MapGet("/ping", () => Results.Ok("Pong"));
+app.MapMethods("/ping", new[] { "GET", "HEAD" }, () => Results.Ok("Pong"));
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -5,6 +5,18 @@
     "version": "v1"
   },
   "paths": {
+    "/ping": {
+      "get": {
+        "tags": [
+          "Alumni"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/comments": {
       "post": {
         "tags": [
